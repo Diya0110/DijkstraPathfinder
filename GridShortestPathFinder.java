@@ -54,21 +54,18 @@ public class GridShortestPathFinder extends JFrame {
         Point clickedPoint = new Point(x, y);
 
         if (startPoint == null) {
-            // Set start point to blue
             startPoint = clickedPoint;
             button.setBackground(Color.BLUE);
         } else if (endPoint == null && !clickedPoint.equals(startPoint)) {
-            // Set end point to red
             endPoint = clickedPoint;
             button.setBackground(Color.RED);
         } else if (!clickedPoint.equals(startPoint) && !clickedPoint.equals(endPoint)) {
-            // Toggle blocked nodes (set background to white for blocked nodes)
             if (blockedNodes.contains(clickedPoint)) {
                 blockedNodes.remove(clickedPoint);
-                button.setBackground(Color.BLACK); // Unblock (set back to black)
+                button.setBackground(Color.BLACK);
             } else {
                 blockedNodes.add(clickedPoint);
-                button.setBackground(Color.WHITE); // Block (set to white)
+                button.setBackground(Color.WHITE); 
             }
         }
     }
@@ -84,14 +81,11 @@ public class GridShortestPathFinder extends JFrame {
         if (path == null) {
             JOptionPane.showMessageDialog(this, "No path found!");
         } else {
-            // Set path cells to blue (except start and end points)
             for (Point p : path) {
                 if (!p.equals(startPoint) && !p.equals(endPoint)) {
-                    gridButtons[p.x][p.y].setBackground(Color.BLUE); // Blue for path
+                    gridButtons[p.x][p.y].setBackground(Color.BLUE); 
                 }
             }
-
-            // Show path size (number of steps in the path)
             JOptionPane.showMessageDialog(this, "Path found! Size: " + (path.size() - 1) + " steps.");
         }
     }
@@ -116,7 +110,7 @@ public class GridShortestPathFinder extends JFrame {
             Point currentPoint = currentNode.point;
 
             if (currentPoint.equals(endPoint)) {
-                // Found the shortest path
+
                 return reconstructPath(previous);
             }
 
@@ -124,7 +118,7 @@ public class GridShortestPathFinder extends JFrame {
                 if (blockedNodes.contains(neighbor))
                     continue;
 
-                int newDist = distances.get(currentPoint) + 1; // Each edge has weight 1
+                int newDist = distances.get(currentPoint) + 1;
                 if (newDist < distances.get(neighbor)) {
                     distances.put(neighbor, newDist);
                     previous.put(neighbor, currentPoint);
@@ -132,7 +126,7 @@ public class GridShortestPathFinder extends JFrame {
                 }
             }
         }
-        return null; // No path found
+        return null;
     }
 
     private java.util.List<Point> reconstructPath(Map<Point, Point> previous) {
